@@ -46,15 +46,15 @@ def generate_launch_description():
 
         Node(
             package='wauv_sim',
-            executable='vehicle_controller',
-            name='vehicle_controller',
+            executable='motion_controller',
+            name='motion_controller',
             output='screen'
         ),
 
         Node(
             package='wauv_sim',
-            executable='waypoint_controller',
-            name='waypoint_controller',
+            executable='waypoint_detector',
+            name='waypoint_detector',
             output='screen'
         ),
     ])

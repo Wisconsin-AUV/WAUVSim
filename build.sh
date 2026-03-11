@@ -7,9 +7,9 @@ source /opt/ros/humble/setup.bash
 echo "Clearing old files..."
 rm -rf build install log
 
-# build the package
+# build the package (do not include bluerov2_gz)
 echo "Building package..."
-colcon build --symlink-install
+colcon build --packages-select wauv_sim --symlink-install
 
 # source it
 source install/setup.bash
