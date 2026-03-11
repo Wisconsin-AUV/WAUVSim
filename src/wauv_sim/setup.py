@@ -27,6 +27,7 @@ setup(
         'console_scripts': [
             'motion_controller = wauv_sim.motion_controller:main',
             'waypoint_detector = wauv_sim.waypoint_detector:main',
+            'vehicle_manager = wauv_sim.vehicle_manager:main',
         ],
     },
 )
