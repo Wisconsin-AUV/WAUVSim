@@ -12,8 +12,8 @@ from geometry_msgs.msg import Point
 from geometry_msgs.msg import Twist
 import math
 
-class motion_controller(Node):
-
+class MotionController(Node):
+    
     def __init__(self):
         super().__init__('motion_controller')
 
@@ -81,7 +81,7 @@ class motion_controller(Node):
 def main(args=None):
     rclpy.init(args=args)
 
-    node = motion_controller()
+    node = MotionController()
 
     rclpy.spin(node)
 

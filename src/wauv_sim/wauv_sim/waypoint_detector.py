@@ -11,7 +11,7 @@ from geometry_msgs.msg import Point
 from geometry_msgs.msg import PoseStamped
 import math
 
-class waypoint_detector(Node):
+class WaypointDetector(Node):
 
     def __init__(self):
         super().__init__('waypoint_detector')
@@ -64,7 +64,7 @@ class waypoint_detector(Node):
 def main(args=None):
     rclpy.init(args=args)
 
-    node = waypoint_detector()
+    node = WaypointDetector()
 
     rclpy.spin(node)
 
