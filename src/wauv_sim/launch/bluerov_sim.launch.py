@@ -1,6 +1,6 @@
 import os
 from launch import LaunchDescription
-from launch.actions import ExecuteProcess # used to start processes
+from launch.actions import ExecuteProcess, SetEnvironmentVariable # used to start processes
 from launch_ros.actions import Node
 
 def generate_launch_description():
@@ -12,6 +12,18 @@ def generate_launch_description():
     qgc_path = os.path.join(home, 'WAUV', 'QGroundControl-x86_64.AppImage')
 
     return LaunchDescription([
+        # set the environment variables so Gazebo locates them
+        SetEnvironmentVariable(
+            name='GZ_SIM_RESOURCE_PATH',
+            value=os.path.join(home, 'WAUV', 'WAUVSim', 'src', 'bluerov2_gz', 'models')
+        ),
+
+        # start Gazebo
+        ExecuteProcess(
+            cmd=['gz', 'sim', '-v', '3', '-r', gz_world],
+            output='screen'
+        ),
+
         # start ArduSub SITL
         ExecuteProcess(
              cmd=['bash', '-c',
@@ -21,16 +33,10 @@ def generate_launch_description():
             output='screen'
         ),
 
-        # start Gazebo
-        ExecuteProcess(
-            cmd=['gz', 'sim', '-v', '3', '-r', gz_world],
-            output='screen'
-        ),
-
         # start mavros
         ExecuteProcess(
             cmd=['bash', '-c',
-                 'source /opt/ros/humble/setup.bash && ros2 launch mavros mavros.launch.py fcu_url:=udp://:14551@'],
+                'source /opt/ros/humble/setup.bash && ros2 run mavros mavros_node --ros-args -p fcu_url:=udp://:14551@'],
             output='screen'
         ),
 
