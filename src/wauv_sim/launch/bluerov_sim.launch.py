@@ -1,6 +1,7 @@
 import os
 from launch import LaunchDescription
 from launch.actions import ExecuteProcess # used to start processes
+from launch_ros.actions import Node
 
 def generate_launch_description():
     
@@ -26,6 +27,7 @@ def generate_launch_description():
             output='screen'
         ),
 
+        # start mavros
         ExecuteProcess(
             cmd=['bash', '-c',
                  'source /opt/ros/humble/setup.bash && ros2 launch mavros mavros.launch.py fcu_url:=udp://:14551@'],
@@ -33,5 +35,27 @@ def generate_launch_description():
         ),
 
         # can optionally add QGC for simulation telemetry / GUI
+
+        # start ROS nodes
+        Node(
+            package='wauv_sim',
+            executable='vehicle_manager',
+            name='vehicle_manager',
+            output='screen'
+        ),
+
+        Node(
+            package='wauv_sim',
+            executable='vehicle_controller',
+            name='vehicle_controller',
+            output='screen'
+        ),
+
+        Node(
+            package='wauv_sim',
+            executable='waypoint_controller',
+            name='waypoint_controller',
+            output='screen'
+        ),
     ])
 
