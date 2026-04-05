@@ -11,6 +11,7 @@ First time setup:
 
 Every time you run the simulation:
 - Rebuild by entering './build.sh' in the directory '~/WAUV/WAUVSim'
+- Source it, 'source install/setup.bash'
 - To launch the simulation, enter the command 'ros2 launch wauv_sim bluerov_sim.launch.py'
 
 e

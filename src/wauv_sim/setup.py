@@ -11,6 +11,7 @@ setup(
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
         ('share/' + package_name + '/launch', ['launch/bluerov_sim.launch.py']),
+        ('share/' + package_name + '/launch', ['launch/manual_sim.launch.py']),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -28,6 +29,7 @@ setup(
             'motion_controller = wauv_sim.motion_controller:main',
             'waypoint_detector = wauv_sim.waypoint_detector:main',
             'vehicle_manager = wauv_sim.vehicle_manager:main',
+            'manual_controller = wauv_sim.manual_controller:main',
         ],
     },
 )
