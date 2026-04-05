@@ -31,9 +31,9 @@ class ManualController(Node):
         # send a Twist command
         cmd = Twist()
 
-        cmd.linear.x = 100
-        cmd.linear.y = 1
-        cmd.linear.z = 1
+        cmd.linear.x = 100.0
+        cmd.linear.y = 1.0
+        cmd.linear.z = 1.0
 
         self.cmd_pub.publish(cmd)
 

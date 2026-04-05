@@ -9,6 +9,27 @@ fi
 
 sudo apt update
 sudo apt install -y curl gnupg lsb-release build-essential cmake git
+sudo apt install -y python3-pip
+
+# Clone ArduPilot
+cd ~/WAUV
+
+if [ ! -d "ardupilot" ]; then
+    echo "Cloning ArduPilot..."
+    git clone https://github.com/ArduPilot/ardupilot.git
+fi
+
+cd ~/WAUV/ardupilot
+
+# Initialize submodules to have access to full tools
+git submodule update --init --recursive
+
+# Install ArduPilot dependencies
+Tools/environment_install/install-prereqs-ubuntu.sh -y
+
+# Source environment
+echo "source ~/WAUV/ardupilot/Tools/completion/completion.bash" >> ~/.bashrc
+echo "export PATH=\$PATH:~/WAUV/ardupilot/Tools/autotest" >> ~/.bashrc
 
 # Install ROS2 Humble
 if ! command -v ros2 &> /dev/null; then
@@ -114,6 +135,12 @@ rosdep update
 
 # Install dependencies
 rosdep install --from-paths src --ignore-src -r -y
+
+# Fix version issues
+python3 -m pip install --upgrade pip
+
+# CHange setuptools version
+python3 -m pip install "setuptools<80"
 
 # Build workspace
 colcon build --symlink-install
