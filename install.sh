@@ -33,6 +33,28 @@ if ! grep -q "ros/humble/setup.bash" ~/.bashrc; then
     echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
 fi
 
+# Install ArduPilot Gazebo Plugin dependencies
+sudo apt install libgz-sim8-dev rapidjson-dev
+sudo apt install libopencv-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev gstreamer1.0-plugins-bad gstreamer1.0-libav gstreamer1.0-gl
+
+# Clone ArduPilot Gazebo Plugin
+cd ~/WAUV
+
+if [ ! -d "ardupilot_gazebo" ]; then
+    git clone https://github.com/ArduPilot/ardupilot_gazebo.git
+fi
+
+# Build ArduPilot Gazeo Plugin
+export GZ_VERSION=harmonic
+cd ~/WAUV/ardupilot_gazebo
+mkdir -p build && cd build
+cmake ..
+make -j$(nproc)
+
+# Configure Gazebo environment
+echo 'export GZ_SIM_SYSTEM_PLUGIN_PATH=$HOME/WAUV/ardupilot_gazebo/build:${GZ_SIM_SYSTEM_PLUGIN_PATH}' >> ~/.bashrc
+echo 'export GZ_SIM_RESOURCE_PATH=$HOME/WAUV/ardupilot_gazebo/models:$HOME/WAUV/ardupilot_gazebo/worlds:${GZ_SIM_RESOURCE_PATH}' >> ~/.bashrc
+
 # Install Gazebo Harmonic
 if ! command -v gz &> /dev/null; then
     echo "Installing Gazebo Harmonic..."

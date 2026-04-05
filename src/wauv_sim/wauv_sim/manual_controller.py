@@ -15,17 +15,17 @@ class ManualController(Node):
     def __init__(self):
         super().__init__('manual_controller')
 
-    # publish to MAVROS
-    self.cmd_pub = self.create_publisher(
-        Twist,
-        '/mavros/setpoint_velocity/cmd_vel',
-        10
-    )
+        # publish to MAVROS
+        self.cmd_pub = self.create_publisher(
+            Twist,
+            '/mavros/setpoint_velocity/cmd_vel',
+            10
+        )
 
-    # control loop timer
-    self.timer = self.create_timer(0.05, self.command_loop)  # 20 Hz
+        # control loop timer
+        self.timer = self.create_timer(0.05, self.command_loop)  # 20 Hz
 
-    self.get_logger().info("Started manual controller")
+        self.get_logger().info("Started manual controller")
 
     def command_loop(self):
         # send a Twist command
