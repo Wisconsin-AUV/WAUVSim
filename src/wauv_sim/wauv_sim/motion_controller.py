@@ -11,6 +11,7 @@ from geometry_msgs.msg import PoseStamped
 from geometry_msgs.msg import Point
 from geometry_msgs.msg import Twist
 import math
+from rclpy.qos import qos_profile_sensor_data
 
 class MotionController(Node):
     
@@ -22,7 +23,7 @@ class MotionController(Node):
             PoseStamped,
             '/mavros/local_position/pose',
             self.pose_callback,
-            10 #QOS
+            qos_profile_sensor_data
         )
 
         self.waypoint_sub = self.create_subscription(
@@ -61,7 +62,8 @@ class MotionController(Node):
     def command_loop(self):
         # ensure that a target position is desired
         if self.current_pose is None or self.target_wp is None:
-            # TODO implement idle behavior
+            # TODO implement idle behavio
+            self.get_logger().info("hmmmm something is None")
             return
 
         dx = self.target_wp.x - self.current_pose.x
@@ -75,7 +77,7 @@ class MotionController(Node):
         cmd.linear.x = self.Kp * dx
         cmd.linear.y = self.Kp * dy
         cmd.linear.z = self.Kp * dz
-        self.get_logger.info("something is working lol")
+        self.get_logger().info("something is working lol")
         self.cmd_pub.publish(cmd)
 
 def main(args=None):
