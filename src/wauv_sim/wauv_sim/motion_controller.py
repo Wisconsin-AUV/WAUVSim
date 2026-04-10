@@ -27,7 +27,7 @@ class MotionController(Node):
 
         self.waypoint_sub = self.create_subscription(
             Point,
-            '/wauv_sim/waypoint',
+            '/wauv/waypoint',
             self.waypoint_callback,
             10
         )
@@ -75,7 +75,7 @@ class MotionController(Node):
         cmd.linear.x = self.Kp * dx
         cmd.linear.y = self.Kp * dy
         cmd.linear.z = self.Kp * dz
-
+        self.get_logger.info("something is working lol")
         self.cmd_pub.publish(cmd)
 
 def main(args=None):
