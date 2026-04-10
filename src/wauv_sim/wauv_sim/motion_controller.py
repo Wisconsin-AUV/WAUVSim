@@ -35,7 +35,7 @@ class MotionController(Node):
         # publish to MAVROS
         self.cmd_pub = self.create_publisher(
             Twist,
-            '/mavros/setpoint_velocity/cmd_vel',
+            '/mavros/setpoint_velocity/cmd_vel_unstamped',
             10
         )
 
