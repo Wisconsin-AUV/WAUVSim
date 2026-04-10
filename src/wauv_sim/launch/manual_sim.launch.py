@@ -28,7 +28,7 @@ def generate_launch_description():
         ExecuteProcess(
              cmd=['bash', '-c',
                  f'source {home}/.profile && cd {ardupilot_path} && '
-                 './Tools/autotest/sim_vehicle.py -v ArduSub -L Madison --map --console '
+                 './Tools/autotest/sim_vehicle.py -v ArduSub -L CMAC --map --console '
                  '-f vectored_6dof --model JSON --out=udp:127.0.0.1:14551'],
             output='screen'
         ),
