@@ -8,14 +8,14 @@ def generate_launch_description():
     # paths used in executions
     home = os.path.expanduser('~')
     ardupilot_path = os.path.join(home, 'WAUV', 'ardupilot')
-    gz_world = os.path.join(home, 'WAUV', 'WAUVSim', 'src', 'bluerov2_gz', 'worlds', 'bluerov2_heavy_underwater.world')
+    gz_world = os.path.join(home, 'WAUV', 'WAUVSim', 'src', 'wauv_gz', 'worlds', 'wauv.world')
     qgc_path = os.path.join(home, 'WAUV', 'QGroundControl-x86_64.AppImage')
 
     return LaunchDescription([
         # set the environment variables so Gazebo locates them
         SetEnvironmentVariable(
             name='GZ_SIM_RESOURCE_PATH',
-            value=os.path.join(home, 'WAUV', 'WAUVSim', 'src', 'bluerov2_gz', 'models')
+            value=os.path.join(home, 'WAUV', 'WAUVSim', 'src', 'wauv_gz', 'models')
         ),
 
         # start Gazebo

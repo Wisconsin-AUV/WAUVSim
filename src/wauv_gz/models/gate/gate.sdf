@@ -1,0 +1,36 @@
+<?xml version='1.0'?>
+<sdf version="1.5">
+  <model name="gate">
+    <pose>0 -0.02 0.09 1.57 0 -1.54</pose>
+    <static>true</static>
+    <link name="link">
+      <inertial>
+        <mass>1.0</mass>
+        <inertia>
+          <ixx>7.75</ixx>
+          <ixy>0.0</ixy>
+          <ixz>0.0</ixz>
+          <iyy>44.97</iyy>
+          <iyz>0.0</iyz>
+          <izz>52.67</izz>
+        </inertia>
+      </inertial>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+	    <uri>model://gate/meshes/gate_stl.STL</uri>
+	    <scale>0.00254 0.00254 0.00254</scale>
+	  </mesh>
+	</geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+	    <uri>model://gate/meshes/gate_stl.STL</uri>
+ 	    <scale>0.00254 0.00254 0.00254</scale>
+          </mesh>  
+        </geometry>
+      </visual>
+    </link>
+  </model>
+</sdf>
