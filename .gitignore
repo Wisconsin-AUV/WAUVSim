@@ -9,4 +9,5 @@ gate_yolo/Current_dataset/images/
 gate_yolo/Current_dataset/labels/
 gate_yolo/yolo_cmd.txt
 gate_yolo/runs/
+.DS_Store
 *.pt
