@@ -1,0 +1,23 @@
+path: /Users/scarletjiang/Documents/WAUV doc/Dataset_Augmented
+
+train:
+  - images/train/gate_close
+  - images/train/gate_med
+  - images/train/indoor_gate_cold
+  - images/train/indoor_gate_hot
+  - images/train/sean_gate_cold
+  - images/train/sean_gate_hot
+  - images/train/background
+
+val:
+  - images/val/gate_close
+  - images/val/gate_med
+  - images/val/indoor_gate_cold
+  - images/val/indoor_gate_hot
+  - images/val/sean_gate_cold
+  - images/val/sean_gate_hot
+  - images/val/background
+
+nc: 7
+names: ['buoy', 'mapping_map', 'mapping_hole', 'gate_hot', 'gate_cold', 'bin_temperature', 'bin']
+

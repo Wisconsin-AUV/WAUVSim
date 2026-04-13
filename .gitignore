@@ -3,3 +3,10 @@ build
 install
 src/bluerov2_gz
 __pycache__/
+
+# YOLO stuff
+gate_yolo/Current_dataset/images/
+gate_yolo/Current_dataset/labels/
+gate_yolo/yolo_cmd.txt
+gate_yolo/runs/
+*.pt
