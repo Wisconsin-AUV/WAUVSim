@@ -19,7 +19,7 @@
         <geometry>
           <mesh>
 	    <uri>model://gate/meshes/gate_stl.STL</uri>
-	    <scale>0.00254 0.00254 0.00254</scale>
+	    <scale>0.00152 0.00152 0.00152</scale>
 	  </mesh>
 	</geometry>
       </collision>
@@ -27,7 +27,7 @@
         <geometry>
           <mesh>
 	    <uri>model://gate/meshes/gate_stl.STL</uri>
- 	    <scale>0.00254 0.00254 0.00254</scale>
+ 	    <scale>0.00152 0.00152 0.00152</scale>
           </mesh>  
         </geometry>
       </visual>
