@@ -11,7 +11,8 @@ sudo apt update
 sudo apt install -y curl gnupg lsb-release build-essential cmake git
 sudo apt install -y python3-pip
 
-python3 -m pip install --upgrade pip
+# FIX: ensure modern pip before anything uses it
+python3 -m pip install --upgrade pip setuptools wheel
 python3 -m pip install pynput
 
 # Clone ArduPilot
@@ -140,9 +141,6 @@ rosdep update
 rosdep install --from-paths src --ignore-src -r -y
 
 # Fix version issues
-python3 -m pip install --upgrade pip
-
-# CHange setuptools version
 python3 -m pip install "setuptools<80"
 
 # Build workspace
