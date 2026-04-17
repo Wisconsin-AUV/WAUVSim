@@ -8,6 +8,7 @@ First time setup:
 - Open a terminal in Ubuntu 22.04 (with WSL2)
 - Clone this repo in a directory named 'WAUV'
 - In the bash terminal, run the command './install.sh' (expect to wait at least 20 minutes)
+- - Write "chmod +x build.sh" to enable ./build.sh
 
 Every time you run the simulation:
 - Rebuild by entering './build.sh' in the directory '~/WAUV/WAUVSim'
