@@ -10,6 +10,7 @@ fi
 sudo apt update
 sudo apt install -y curl gnupg lsb-release build-essential cmake git
 sudo apt install -y python3-pip
+pip install pynput
 
 # Clone ArduPilot
 cd ~/WAUV
