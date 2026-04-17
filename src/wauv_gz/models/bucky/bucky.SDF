@@ -1,0 +1,26 @@
+<?xml version='1.0'?>
+<sdf version="1.5">
+  <model name="bucky">
+    <pose>0 0 0 0 0 0</pose>
+    <static>true</static>
+    <link name="link">
+     <collision name="collision">
+        <geometry>
+          <mesh>
+		  <uri>model://bucky/meshes/bucky.STL</uri>
+		  <scale>0.2 0.2 0.2</scale>
+	  </mesh>
+	</geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+		  <uri>model://bucky/meshes/bucky.STL</uri>
+		  <scale>0.2 0.2 0.2</scale>
+          </mesh>  
+        </geometry>
+      </visual>
+    </link>
+  </model>
+</sdf>
+

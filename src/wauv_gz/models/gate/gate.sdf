@@ -18,16 +18,16 @@
       <collision name="collision">
         <geometry>
           <mesh>
-	    <uri>model://gate/meshes/gate_stl.STL</uri>
-	    <scale>0.00152 0.00152 0.00152</scale>
+            <uri>model://gate/meshes/gate_stl.STL</uri>
+	    <scale>0.00154 0.00154 0.00154</scale>
 	  </mesh>
 	</geometry>
       </collision>
       <visual name="visual">
         <geometry>
           <mesh>
-	    <uri>model://gate/meshes/gate_stl.STL</uri>
- 	    <scale>0.00152 0.00152 0.00152</scale>
+		  <uri>model://gate/meshes/gate_stl.STL</uri>
+		  <scale>0.00154 0.00154 0.00154</scale>
           </mesh>  
         </geometry>
       </visual>
