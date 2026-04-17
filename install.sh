@@ -58,6 +58,26 @@ if ! grep -q "ros/humble/setup.bash" ~/.bashrc; then
     echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
 fi
 
+# Install Gazebo Harmonic
+if ! command -v gz &> /dev/null; then
+    echo "Installing Gazebo Harmonic..."
+
+    sudo curl -fsSL https://packages.osrfoundation.org/gazebo.gpg \
+        -o /usr/share/keyrings/gazebo-archive-keyring.gpg
+
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/gazebo-archive-keyring.gpg] \
+    http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" | \
+    sudo tee /etc/apt/sources.list.d/gazebo-stable.list > /dev/null
+
+    sudo apt update
+    sudo apt install -y gz-harmonic \
+                        libgz-sim8-dev \
+                        libgz-math7-dev \
+                        libgz-transport13-dev \
+                        libgz-common5-dev \
+                        rapidjson-dev
+fi
+
 # Install ArduPilot Gazebo Plugin dependencies
 sudo apt install libgz-sim8-dev rapidjson-dev
 sudo apt install libopencv-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev gstreamer1.0-plugins-bad gstreamer1.0-libav gstreamer1.0-gl
@@ -79,26 +99,6 @@ make -j$(nproc)
 # Configure Gazebo environment
 echo 'export GZ_SIM_SYSTEM_PLUGIN_PATH=$HOME/WAUV/ardupilot_gazebo/build:${GZ_SIM_SYSTEM_PLUGIN_PATH}' >> ~/.bashrc
 echo 'export GZ_SIM_RESOURCE_PATH=$HOME/WAUV/ardupilot_gazebo/models:$HOME/WAUV/ardupilot_gazebo/worlds:${GZ_SIM_RESOURCE_PATH}' >> ~/.bashrc
-
-# Install Gazebo Harmonic
-if ! command -v gz &> /dev/null; then
-    echo "Installing Gazebo Harmonic..."
-
-    sudo curl -fsSL https://packages.osrfoundation.org/gazebo.gpg \
-        -o /usr/share/keyrings/gazebo-archive-keyring.gpg
-
-    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/gazebo-archive-keyring.gpg] \
-    http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" | \
-    sudo tee /etc/apt/sources.list.d/gazebo-stable.list > /dev/null
-
-    sudo apt update
-    sudo apt install -y gz-harmonic \
-                        libgz-sim8-dev \
-                        libgz-math7-dev \
-                        libgz-transport13-dev \
-                        libgz-common5-dev \
-                        rapidjson-dev
-fi
 
 # Install MAVROS
 sudo apt install -y ros-humble-mavros \
