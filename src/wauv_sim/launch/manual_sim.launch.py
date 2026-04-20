@@ -18,6 +18,11 @@ def generate_launch_description():
             value=os.path.join(home, 'WAUV', 'WAUVSim', 'src', 'wauv_gz', 'models')
         ),
 
+        SetEnvironmentVariable(
+            name='GZ_SIM_SYSTEM_PLUGIN_PATH',
+            value=os.path.join(home, 'WAUV', 'ardupilot_gazebo', 'build')
+        ),
+
         # start Gazebo
         ExecuteProcess(
             cmd=['gz', 'sim', '-v', '3', '-r', gz_world],
