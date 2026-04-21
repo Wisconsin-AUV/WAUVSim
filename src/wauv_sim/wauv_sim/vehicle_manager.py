@@ -50,15 +50,17 @@ class VehicleManager(Node):
         # track if the AUV is ready
         self.vehicle_ready = False
 
-        # track if the mode has been set to GUIDED
-        self.mode_set = False
-
         # track AUV state
         self.state = State()
 
         # prevent repeated service spam
         self.mode_request_sent = False
         self.arm_request_sent = False
+
+        # timers to manage retry procedure
+        self.mode_timer = self.create_timer(1.0, self.retry_mode)
+        self.arm_timer = self.create_timer(1.0, self.retry_arm)
+
 
         # main loop
         self.timer = self.create_timer(
@@ -76,12 +78,20 @@ class VehicleManager(Node):
     def mode_response(self, future):
         res = future.result()
 
-        if res.mode_sent:
-            self.get_logger().info("Mode set to GUIDED")
-            self.mode_set = True
+        if self.state.mode == "GUIDED":
+            self.get_logger().info("Mode confirmed GUIDED")
         else:
-            self.get_logger().warn("Mode change failed")
-            self.mode_request_sent = False  # allow retry
+            self.get_logger().warn("Mode request sent but not yet active")
+
+    def retry_mode(self):
+        if not self.state.connected:
+            return
+        
+        if self.state.mode == "GUIDED":
+            return
+        
+        # try again
+        self.set_mode("GUIDED")
 
     def arm_vehicle(self):
         req = CommandBool.Request()
@@ -93,12 +103,26 @@ class VehicleManager(Node):
     def arm_response(self, future):
         res = future.result()
 
-        if res.success:
-            self.get_logger().info("Vehicle armed")
+        if self.state.armed:
+            self.get_logger().info("Vehicle confirmed as armed")
             self.vehicle_ready = True
+            self.arm_request_sent = False
         else:
             self.get_logger().warn("Arming failed")
             self.arm_request_sent = False  # allow retry
+
+    def retry_arm(self):
+        if not self.state.connected:
+            return
+        
+        # must be guided before armed
+        if self.state.mode != "GUIDED":
+            return
+        
+        if not self.state.armed:
+            self.vehicle_ready = False
+            self.arm_vehicle()
+            self.arm_request_sent = True
 
     def state_callback(self, msg):
         self.state = msg
@@ -109,19 +133,11 @@ class VehicleManager(Node):
             self.get_logger().info("Waiting for FCU...")
             return
 
-        # make sure mode is guided
-        if not self.mode_set:
-            if not self.mode_request_sent:
-                self.set_mode("GUIDED")
-                self.mode_request_sent = True
-            return
-
-        # make sure vehicle is ready
-        if not self.vehicle_ready:
-            if not self.arm_request_sent:
-                self.arm_vehicle()
-                self.arm_request_sent = True
-            return
+        self.vehicle_ready = (
+            self.state.connected and
+            self.state.armed and
+            self.state.mode == "GUIDED"
+        )
 
         msg = Bool()
         msg.data = self.vehicle_ready
