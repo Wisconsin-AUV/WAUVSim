@@ -8,14 +8,14 @@ def generate_launch_description():
     # paths used in executions
     home = os.path.expanduser('~')
     ardupilot_path = os.path.join(home, 'WAUV', 'ardupilot')
-    gz_world = os.path.join(home, 'WAUV', 'WAUVSim', 'src', 'bluerov2_gz', 'worlds', 'bluerov2_heavy_underwater.world')
+    gz_world = os.path.join(home, 'WAUV', 'WAUVSim', 'src', 'wauv_gz', 'worlds', 'wauv.world')
     qgc_path = os.path.join(home, 'WAUV', 'QGroundControl-x86_64.AppImage')
 
     return LaunchDescription([
         # set the environment variables so Gazebo locates them
         SetEnvironmentVariable(
             name='GZ_SIM_RESOURCE_PATH',
-            value=os.path.join(home, 'WAUV', 'WAUVSim', 'src', 'bluerov2_gz', 'models')
+            value=os.path.join(home, 'WAUV', 'WAUVSim', 'src', 'wauv_gz', 'models')
         ),
 
         SetEnvironmentVariable(
@@ -41,7 +41,9 @@ def generate_launch_description():
         # start mavros
         ExecuteProcess(
             cmd=['bash', '-c',
-                'source /opt/ros/humble/setup.bash && ros2 run mavros mavros_node --ros-args -p fcu_url:=udp://:14551@'],
+                'source /opt/ros/humble/setup.bash && '
+                'ros2 run mavros mavros_node --ros-args '
+                '-p fcu_url:=udp://127.0.0.1:14551@127.0.0.1:14551'],
             output='screen'
         ),
 
