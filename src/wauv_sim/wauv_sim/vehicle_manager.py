@@ -43,6 +43,9 @@ class VehicleManager(Node):
         # track if the AUV is ready
         self.vehicle_ready = False
 
+        # track if the mode has been set to GUIDED
+        self.mode_set = False
+
         # main loop
         self.timer = self.create_timer(
             1.0,
@@ -78,13 +81,20 @@ class VehicleManager(Node):
             self.get_logger().warn("Arming failed")
 
     def manager_loop(self):
+        # make sure mode is guided
+        if not self.mode_set:
+            self.set_mode("GUIDED")
+            self.mode_set = True
+            return
+
+        # make sure vehicle is ready
         if not self.vehicle_ready:
             # Arm vehicle
             self.arm_vehicle()
+            return
 
         msg = Bool()
         msg.data = self.vehicle_ready
-
         self.ready_pub.publish(msg)
 
 def main(args=None):
