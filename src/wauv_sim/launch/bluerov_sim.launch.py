@@ -70,5 +70,12 @@ def generate_launch_description():
             name='waypoint_detector',
             output='screen'
         ),
+
+        Node(
+            package='wauv_sim',
+            executable='perception',
+            name='perception',
+            output='screen'
+        ),
     ])
 

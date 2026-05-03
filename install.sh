@@ -151,4 +151,7 @@ if ! grep -q "WAUV/WAUVSim/install/setup.bash" ~/.bashrc; then
     echo "source ~/WAUV/WAUVSim/install/setup.bash" >> ~/.bashrc
 fi
 
+# TODO install all non-key dependencies at the end so that annoying errors are encountered first (QOL)
+sudo apt install ros-humble-cv-bridge
+
 echo "INSTALL COMPLETE (づ ◕‿◕ )づ"

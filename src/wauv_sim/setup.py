@@ -30,6 +30,7 @@ setup(
             'waypoint_detector = wauv_sim.waypoint_detector:main',
             'vehicle_manager = wauv_sim.vehicle_manager:main',
             'manual_controller = wauv_sim.manual_controller:main',
+            'perception = wauv_sim.perception:main',
         ],
     },
 )
