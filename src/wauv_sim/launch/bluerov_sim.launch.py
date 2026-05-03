@@ -49,6 +49,20 @@ def generate_launch_description():
 
         # can optionally add QGC for simulation telemetry / GUI
 
+        # bridge Gazebo depth camera topics to ROS2
+        Node(
+            package='ros_gz_bridge',
+            executable='parameter_bridge',
+            name='gz_ros_bridge',
+            arguments=[
+                '/bluerov2_heavy/depth_camera/image@sensor_msgs/msg/Image@gz.msgs.Image',
+                '/bluerov2_heavy/depth_camera/depth_image@sensor_msgs/msg/Image@gz.msgs.Image',
+                '/bluerov2_heavy/depth_camera/points@sensor_msgs/msg/PointCloud2@gz.msgs.PointCloudPacked',
+                '/bluerov2_heavy/depth_camera/camera_info@sensor_msgs/msg/CameraInfo@gz.msgs.CameraInfo',
+            ],
+            output='screen'
+        ),
+
         # start ROS nodes
         Node(
             package='wauv_sim',

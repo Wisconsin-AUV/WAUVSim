@@ -57,9 +57,9 @@ class WaypointDetector(Node):
 
         self.angle += self.angular_speed
 
-        self.get_logger().info(
-            f"Publishing waypoint: ({x:.2f}, {y:.2f}, {z:.2f})"
-        )
+       # self.get_logger().info(
+      #      f"Publishing waypoint: ({x:.2f}, {y:.2f}, {z:.2f})"
+      #  )
 
 def main(args=None):
     rclpy.init(args=args)

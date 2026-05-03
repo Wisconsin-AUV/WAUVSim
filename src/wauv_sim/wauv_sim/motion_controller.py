@@ -63,7 +63,7 @@ class MotionController(Node):
         # ensure that a target position is desired
         if self.current_pose is None or self.target_wp is None:
             # TODO implement idle behavio
-            self.get_logger().info("hmmmm something is None")
+            #self.get_logger().info("hmmmm something is None")
             return
 
         dx = self.target_wp.x - self.current_pose.x
@@ -77,7 +77,7 @@ class MotionController(Node):
         cmd.linear.x = self.Kp * dx
         cmd.linear.y = self.Kp * dy
         cmd.linear.z = self.Kp * dz
-        self.get_logger().info("something is working lol")
+        #self.get_logger().info("something is working lol")
         self.cmd_pub.publish(cmd)
 
 def main(args=None):

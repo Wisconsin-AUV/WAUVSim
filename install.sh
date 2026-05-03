@@ -153,5 +153,6 @@ fi
 
 # TODO install all non-key dependencies at the end so that annoying errors are encountered first (QOL)
 sudo apt install ros-humble-cv-bridge
+sudo apt install ros-humble-ros-gz-bridge
 
 echo "INSTALL COMPLETE (づ ◕‿◕ )づ"
