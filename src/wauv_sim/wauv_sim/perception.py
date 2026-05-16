@@ -13,7 +13,7 @@ import numpy as np
 
 MAX_IMAGES = 3
 
-SAVE_DIR = os.path.join(os.path.expanduser("~"), "depth_camera_images")
+SAVE_DIR = os.path.join(os.path.expanduser("~"), 'WAUV', 'WAUVSim', 'data', "test_gz_depth_cam")
 
 class Perception(Node):
 

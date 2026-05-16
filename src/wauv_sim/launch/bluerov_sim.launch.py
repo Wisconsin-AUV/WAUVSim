@@ -32,7 +32,7 @@ def generate_launch_description():
 
     # start ArduSub SITL after waiting for Gazebo
     ardusub = TimerAction(
-        period = 10.0,
+        period = 30.0,
         actions=[  
             ExecuteProcess(
                 cmd=['bash', '-c',
@@ -46,7 +46,7 @@ def generate_launch_description():
 
     # start MAVROS after ArduSub is ready
     mavros = TimerAction(
-        period = 15.0,
+        period = 60.0,
         actions=[
             ExecuteProcess(
                 cmd=['bash', '-c',
