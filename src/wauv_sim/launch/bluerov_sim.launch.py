@@ -1,7 +1,7 @@
 import os
 from launch import LaunchDescription
 from launch.actions import ExecuteProcess, SetEnvironmentVariable, TimerAction, GroupAction
-from launch_ros.actions import Node
+from launch_ros.actions import Node, SetParameter
 
 def generate_launch_description():
     
@@ -32,7 +32,7 @@ def generate_launch_description():
 
     # start ArduSub SITL after waiting for Gazebo
     ardusub = TimerAction(
-        period = 30.0,
+        period = 10.0,
         actions=[  
             ExecuteProcess(
                 cmd=['bash', '-c',
@@ -46,13 +46,14 @@ def generate_launch_description():
 
     # start MAVROS after ArduSub is ready
     mavros = TimerAction(
-        period = 60.0,
+        period = 20.0,
         actions=[
             ExecuteProcess(
                 cmd=['bash', '-c',
                     'source /opt/ros/humble/setup.bash && '
                     'ros2 run mavros mavros_node --ros-args '
-                    '-p fcu_url:=udp://127.0.0.1:14551@127.0.0.1:14551'],
+                    '-p fcu_url:=udp://127.0.0.1:14551@127.0.0.1:14551'
+                    '-p use_sim_time:=true'],
                 output='screen'
             ),
         ]
@@ -62,18 +63,26 @@ def generate_launch_description():
 
     # start ROS stack after MAVROS
     ros_stack = TimerAction(
-        period = 20.0,
+        period = 25.0,
         actions=[
+            # enable non-real time sim
+            SetParameter(name='use_sim_time', value=True),
+
             # ros-gazebo bridge
             Node(
                 package='ros_gz_bridge',
                 executable='parameter_bridge',
                 name='gz_ros_bridge',
                 arguments=[
+                    '/world/wauv/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock',
+                    '/bluerov2_heavy/depth_camera/image@sensor_msgs/msg/Image@gz.msgs.Image',
                     '/bluerov2_heavy/depth_camera/image@sensor_msgs/msg/Image@gz.msgs.Image',
                     '/bluerov2_heavy/depth_camera/depth_image@sensor_msgs/msg/Image@gz.msgs.Image',
                     '/bluerov2_heavy/depth_camera/points@sensor_msgs/msg/PointCloud2@gz.msgs.PointCloudPacked',
                     '/bluerov2_heavy/depth_camera/camera_info@sensor_msgs/msg/CameraInfo@gz.msgs.CameraInfo',
+                ],
+                remappings=[
+                    ('world/wauv/clock', '/clock')
                 ],
                 output='screen'
             ),
